@@ -35,7 +35,7 @@ def rename(fileList, downloadThumbnail):
         i = 0
         while i < len(fileList):
             file = fileList[i]
-            code = re.findall("([A-Z]+-\d+)", file)
+            code = re.findall("([a-zA-Z_0-9]+-\d+)", file)
 
             # Get data
             if len(code) == 1:

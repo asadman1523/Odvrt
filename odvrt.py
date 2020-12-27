@@ -143,7 +143,10 @@ def _run(dialog, label):
     dialog.show()
     i = 0
     while i < len(window.fileNames):
-        main_func.rename([window.fileNames[i]], window.downloadImage)
+        try:
+            main_func.rename([window.fileNames[i]], window.downloadImage)
+        except:
+            pass
         time.sleep(1)
         i = i + 1
     dialog.close()
