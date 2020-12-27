@@ -34,8 +34,10 @@ class MainWindow(QtWidgets.QMainWindow):
                     result = re.findall('\w+$', t)
                     if result[0] == "True":
                         self.ui.downloadImgCheckBox.setChecked(True)
+                        self.downloadImage = True
                     else:
                         self.ui.downloadImgCheckBox.setChecked(False)
+                        self.downloadImage = False
         except:
             # print("Unexpected error:", sys.exc_info()[0])
             raise

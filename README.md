@@ -7,7 +7,7 @@ Odvrt 全名為 Older driver video rename tool 老司機影片改名工具，能
 1. 安裝Python 3.9
 1. 到Release把zip下載下來並解壓縮
   1. https://github.com/asadman1523/odvrt/releases
-1. 打開 Termianl 輸入 python qt_view.py
+1. 打開 Termianl 輸入 python odvrt.py
 
 # 使用方法 How to use
 老司機應該都會吧，把檔案拉進去點執行就可以了，有任何問題可以開issue給我，平日要上班不一定會馬上回
