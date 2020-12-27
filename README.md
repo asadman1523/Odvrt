@@ -9,9 +9,11 @@ Odvrt 全名為 Old driver video rename tool 老司機影片改名工具，能�
 打開 Termianl 輸入 python qt_view.py
 
 # 使用方法 How to use
+老司機應該都會吧，把檔案拉進去點執行就可以了，有任何問題可以開issue給我，平日要上班不一定會馬上回
 
-加入需要更名的所有檔案，點執行
-
+# 貢獻 Attribute
+JackWu的肝
+<div>Icons made by <a href="https://www.flaticon.com/authors/roundicons" title="Roundicons">Roundicons</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
 
 
 
