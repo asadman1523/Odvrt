@@ -4,6 +4,8 @@ import re
 import pathlib
 import shutil
 from bs4 import BeautifulSoup
+from fake_useragent import UserAgent
+from requests.adapters import HTTPAdapter
 
 
 # 取得副檔名
@@ -18,7 +20,7 @@ def getExtension(url):
 def processDownloadImg(url, dst):
     suffix = getExtension(url)
 
-    r = requests.get(url, stream=True)
+    r = getResponse(url, True)
     if r.status_code == 200:
         with open(dst + suffix, 'wb') as f:
             r.raw.decode_content = True
@@ -40,6 +42,7 @@ def rename(fileList, downloadThumbnail):
             # Get data
             if len(code) == 1:
                 resp = requests.get('https://www.libredmm.com/movies/' + code[0])
+                resp = getResponse('https://www.libredmm.com/movies/' + code[0], )
                 if resp.status_code == 200:
                     soup = BeautifulSoup(resp.text, 'html.parser')
                     result = soup.find('h1').text
@@ -60,6 +63,17 @@ def rename(fileList, downloadThumbnail):
     except:
         # print("Unexpected error:" 。sys.exc_info()[0])
         raise
+
+
+def getResponse(url, isStream=False):
+    req = requests.session()
+    req.mount('http://', HTTPAdapter(max_retries=5))
+    req.mount('https://', HTTPAdapter(max_retries=5))
+    ua = UserAgent()
+    headers = {'User-Agent': ua.random}
+    response = req.get(url, headers=headers, stream=isStream, timeout=5)
+    response.encoding = 'utf-8'
+    return response
 
 
 class RenameFunc:
