@@ -1,6 +1,6 @@
 # Odvrt
 
-Odvrt 全名為 Older driver video rename tool 老司機影片改名工具，能批次更改含有番號的檔案名稱並下載同名縮圖
+Odvrt 全名為 Older driver video rename tool 老司機影片改名工具，能搜尋檔案番號加入片名並下載縮圖
 
 # 安裝 Install
 
