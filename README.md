@@ -4,9 +4,7 @@ Odvrt 全名為 Older driver video rename tool 老司機影片改名工具，能
 
 # 安裝 Install
 
-1. 安裝Python 3.9
-1. 設定環境變數
- https://github.com/twtrubiks/python-creation-of-virtual-environments
+1. 安裝Python 3.9 最後記得勾選Add To PATH
 1. 到Release把zip下載下來並解壓縮
  https://github.com/asadman1523/odvrt/releases
 1. 打開 Termianl 輸入 python odvrt.py
