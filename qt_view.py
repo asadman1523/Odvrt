@@ -36,7 +36,7 @@ class Ui_MainWindow(object):
         self.openButton.setObjectName("openButton")
         self.downloadImgCheckBox = QtWidgets.QCheckBox(self.centralwidget)
         self.downloadImgCheckBox.setGeometry(QtCore.QRect(310, 20, 73, 16))
-        self.downloadImgCheckBox.setObjectName("downloadImgBox")
+        self.downloadImgCheckBox.setObjectName("downloadImgCheckBox")
         self.tableWidget = QtWidgets.QTableWidget(self.centralwidget)
         self.tableWidget.setGeometry(QtCore.QRect(10, 90, 771, 451))
         self.tableWidget.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
@@ -104,7 +104,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Odvrt"))
         self.delButton.setText(_translate("MainWindow", "刪除全部"))
         self.openButton.setText(_translate("MainWindow", "開啟"))
         self.downloadImgCheckBox.setText(_translate("MainWindow", "下載縮圖"))
@@ -118,6 +118,7 @@ class Ui_MainWindow(object):
         self.menu_3.setTitle(_translate("MainWindow", "選項"))
         self.action1.setText(_translate("MainWindow", "開啟"))
         self.action3.setText(_translate("MainWindow", "作者"))
+        self.action3.setToolTip(_translate("MainWindow", "作者"))
         self.action2.setText(_translate("MainWindow", "執行"))
-        self.action4.setText(_translate("MainWindow", "Attribute"))
+        self.action4.setText(_translate("MainWindow", "關於此程式"))
         self.action5.setText(_translate("MainWindow", "刪除全部"))

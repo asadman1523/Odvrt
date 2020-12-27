@@ -14,7 +14,7 @@
    <bool>true</bool>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Odvrt</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QPushButton" name="delButton">
@@ -75,7 +75,7 @@
      </size>
     </property>
    </widget>
-   <widget class="QCheckBox" name="downloadImgBox">
+   <widget class="QCheckBox" name="downloadImgCheckBox">
     <property name="geometry">
      <rect>
       <x>310</x>
@@ -231,6 +231,9 @@
    <property name="text">
     <string>作者</string>
    </property>
+   <property name="toolTip">
+    <string>作者</string>
+   </property>
   </action>
   <action name="action2">
    <property name="text">
@@ -239,7 +242,7 @@
   </action>
   <action name="action4">
    <property name="text">
-    <string>Attribute</string>
+    <string>關於此程式</string>
    </property>
   </action>
   <action name="action5">

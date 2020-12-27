@@ -27,7 +27,7 @@ def processDownloadImg(url, dst):
 
 def rename(fileList, downloadThumbnail):
     if len(fileList) == 0:
-        print('No file detect')
+        # print('No file detect')
         return
 
     # Get all files name together and catch number only
@@ -49,16 +49,16 @@ def rename(fileList, downloadThumbnail):
                     p = pathlib.Path(file)
                     if p.is_file():
                         p.rename(p.with_stem(afterFormat))
-                        print(p.with_stem(afterFormat))
+                        # print(p.with_stem(afterFormat))
                         if downloadThumbnail:
-                            print(thumbnail['src'])
+                            # print(thumbnail['src'])
                             processDownloadImg(thumbnail['src'], str(p.with_name(afterFormat)))
 
             else:
                 print("Cannot find any video code:" + file)
             i = i + 1
     except:
-        print("Unexpected error:", sys.exc_info()[0])
+        # print("Unexpected error:" 。sys.exc_info()[0])
         raise
 
 
