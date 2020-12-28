@@ -34,34 +34,46 @@ def rename(fileList, downloadThumbnail):
 
     # Get all files name together and catch number only
     try:
+        codeSet = []
         i = 0
         while i < len(fileList):
             file = fileList[i]
-            code = re.findall("([a-zA-Z_0-9]+-\d+)", file)
-
-            # Get data
-            if len(code) == 1:
-                resp = requests.get('https://www.libredmm.com/movies/' + code[0])
-                resp = getResponse('https://www.libredmm.com/movies/' + code[0], )
-                if resp.status_code == 200:
-                    soup = BeautifulSoup(resp.text, 'html.parser')
-                    result = soup.find('h1').text
-                    thumbnail = soup.find('img')
-                    afterFormat = result.strip().replace('\n', ' ')
-                    # print(afterFormat)
-                    p = pathlib.Path(file)
-                    if p.is_file():
-                        p.rename(p.with_stem(afterFormat))
-                        # print(p.with_stem(afterFormat))
-                        if downloadThumbnail:
-                            # print(thumbnail['src'])
-                            processDownloadImg(thumbnail['src'], str(p.with_name(afterFormat)))
-
+            reResult = re.findall("(\w+-\d+)", file)
+            if len(reResult) == 0:
+                reResult = re.findall("([a-zA-Z]+)(\d+)", file)
+                # 拼接
+                for result in reResult:
+                    if len(result) > 1:
+                        codeSet = codeSet + [result[0] + "-" + result[1]]
             else:
-                print("Cannot find any video code:" + file)
+                codeSet.append(reResult[0])
+            for code in codeSet:
+                try:
+                    print("Downloading..." + code)
+                    # Get data
+                    resp = getResponse('https://www.libredmm.com/movies/' + code, )
+                    if resp.status_code == 200:
+                        soup = BeautifulSoup(resp.text, 'html.parser')
+                        # name
+                        name = soup.find('h1').text
+                        thumbnail = soup.find('img')
+                        afterFormat = name.strip().replace('\n', ' ')
+                        p = pathlib.Path(file)
+                        if p.is_file():
+                            p.rename(p.with_stem(afterFormat))
+                            # print(p.with_stem(afterFormat))
+                            if downloadThumbnail:
+                                # print(thumbnail['src'])
+                                processDownloadImg(thumbnail['src'], str(p.with_name(afterFormat)))
+                        break
+                    else:
+                        raise
+                except:
+                    print(code + " Download failed")
+                    pass
             i = i + 1
     except:
-        # print("Unexpected error:" 。sys.exc_info()[0])
+        # print("Unexpected error:" + sys.exc_info()[0])
         raise
 
 
