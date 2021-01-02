@@ -20,6 +20,7 @@ class MainWindow(QtWidgets.QMainWindow):
     progressbar = None
     _func = None
 
+
     def __init__(self):
         super(MainWindow, self).__init__()
         self.ui = Ui_MainWindow()
@@ -61,6 +62,11 @@ class MainWindow(QtWidgets.QMainWindow):
         # 設定作者link
         self.ui.action3.triggered.connect(self.openAuthorUrl)
         self.ui.action4.triggered.connect(self.openProductUrl)
+
+        self.ui.setDefaultBtn.clicked.connect(self.setDefaultFormat)
+
+    def setDefaultFormat(self):
+        self.ui.formatStr.setText('%code %title %actor')
 
     # drag and drop
     def dragEnterEvent(self, event):
@@ -132,7 +138,7 @@ class MainWindow(QtWidgets.QMainWindow):
             self.progressbar.setWindowTitle("執行中...")
             self.progressbar.show()
 
-            self._func = RenameTool(self.fileNames, self.downloadImage)
+            self._func = RenameTool(self.fileNames, self.downloadImage, self.ui.formatStr.text())
             self._func.countChanged.connect(self.onCountChanged)
             self._func.finished.connect(self.threadFinished)
             self._func.start()

@@ -91,9 +91,9 @@
    <widget class="QTableWidget" name="tableWidget">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>90</y>
-      <width>771</width>
+      <x>20</x>
+      <y>100</y>
+      <width>781</width>
       <height>451</height>
      </rect>
     </property>
@@ -148,9 +148,9 @@
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>670</x>
-      <y>60</y>
-      <width>111</width>
+      <x>700</x>
+      <y>80</y>
+      <width>81</width>
       <height>21</height>
      </rect>
     </property>
@@ -185,6 +185,58 @@
       <width>32</width>
       <height>32</height>
      </size>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="formatStr">
+    <property name="geometry">
+     <rect>
+      <x>360</x>
+      <y>40</y>
+      <width>341</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>%code %title %actor</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>310</x>
+      <y>40</y>
+      <width>47</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>檔名格式</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_3">
+    <property name="geometry">
+     <rect>
+      <x>310</x>
+      <y>60</y>
+      <width>291</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>番號=%code 片名=%title 演員=%actor</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="setDefaultBtn">
+    <property name="geometry">
+     <rect>
+      <x>710</x>
+      <y>40</y>
+      <width>75</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>使用預設值</string>
     </property>
    </widget>
   </widget>

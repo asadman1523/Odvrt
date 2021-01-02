@@ -15,11 +15,14 @@ class RenameTool(QThread):
     countChanged = pyqtSignal(int)
     fileList = []
     downloadThumbnail = False  # Should download img
+    formatStr = ""
+    defaultFormat = "%code %title %actor"
 
-    def __init__(self, list, download):
+    def __init__(self, list, download, formatStr):
         super().__init__()
         self.fileList = list
         self.downloadThumbnail = download
+        self.formatStr = formatStr
 
     # 取得副檔名
     def getExtension(self, url):
@@ -72,17 +75,58 @@ class RenameTool(QThread):
                         resp = self.getResponse('https://www.libredmm.com/movies/' + code)
                         if resp.status_code == 200:
                             soup = BeautifulSoup(resp.text, 'html.parser')
-                            # name
-                            name = soup.find('h1').text
+
+                            # Full name
+                            fullTitle = soup.find('h1').text.split('\n')
+
+                            # code & title
+                            title = ""
+                            code = ""
+                            fillCode = False
+                            fillTitle = False
+                            for i in range(len(fullTitle)):
+                                if not fillCode and fullTitle[i] != '':
+                                    code = fullTitle[i]
+                                    fillCode = True
+                                elif not fillTitle and fullTitle[i] != '':
+                                    title = fullTitle[i]
+                                    break
+
+                            # thumbnail
                             thumbnail = soup.find('img')
-                            afterFormat = name.strip().replace('\n', ' ')
+
+                            # actors
+                            actorsObj = soup.findAll('h6', class_="card-title")
+                            actors = []
+                            for actor in actorsObj:
+                                tmpStr = actor.text.strip().replace('\n', '')
+                                actors.append(tmpStr)
+
+                            # Some title may have actors name, remove it
+                            for actor in actors:
+                                print(actor in title)
+                                title = title.replace(actor, '')
+                            title = title.replace('\n', ' ').strip()
+
+                            # Fill fields
+                            fullName = self.formatStr
+                            if fullName == "":
+                                fullName = self.defaultFormat
+
+                            if '%code' in fullName:
+                                fullName = fullName.replace('%code', code)
+                            if '%title' in fullName:
+                                fullName = fullName.replace('%title', title)
+                            if '%actor' in fullName:
+                                fullName = fullName.replace('%actor', " ".join(actors))
+
                             p = pathlib.Path(file)
                             if p.is_file():
-                                p.rename(p.with_stem(afterFormat))
+                                p.rename(p.with_stem(fullName))
                                 # print(p.with_stem(afterFormat))
                                 if self.downloadThumbnail:
                                     # print(thumbnail['src'])
-                                    self.processDownloadImg(thumbnail['src'], str(p.with_name(afterFormat)))
+                                    self.processDownloadImg(thumbnail['src'], str(p.with_name(fullName)))
                             break
                         else:
                             raise
