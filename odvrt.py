@@ -1,11 +1,9 @@
 import pathlib
-import sys
 import re
-import time
-import threading
+import sys
 
-from PyQt5.QtCore import Qt
 from PyQt5 import QtWidgets, QtCore, QtGui
+from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QTableWidgetItem, QFileDialog, QDialog, QPushButton, QLabel, QProgressBar
 
 from RenameTool import RenameTool
@@ -14,6 +12,7 @@ from qt_view import Ui_MainWindow
 
 class MainWindow(QtWidgets.QMainWindow):
     fileList = []
+    settings = {0:'downloadImg=False', 1:'formatStr=%code %title %actor'}
     fileNames = None
     downloadImage = False
     configPath = pathlib.Path('config.ini')
@@ -26,7 +25,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self.setAcceptDrops(True)
-        # 讀取設定
+        # Read settings
         try:
             if not self.configPath.exists():
                 self.configPath.touch()
@@ -41,6 +40,9 @@ class MainWindow(QtWidgets.QMainWindow):
                     else:
                         self.ui.downloadImgCheckBox.setChecked(False)
                         self.downloadImage = False
+                if "formatStr" in t:
+                    result = re.findall('=(.+)$', t)
+                    self.ui.formatStr.setText(result[0])
         except:
             # print("Unexpected error:", sys.exc_info()[0])
             raise
@@ -128,6 +130,9 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def showProgressAndRun(self):
         try:
+            # Save format
+            self.configPath.write_text("\n".join(['formatStr='+self.ui.formatStr.text() , 'downloadImg='+str(self.downloadImage)]))
+
             self.confirmDialog.close()
             self.progressbar = self.CustomProgressBar()
             self.progressbar.move(-500, -500)
@@ -180,10 +185,10 @@ class MainWindow(QtWidgets.QMainWindow):
         try:
             if self.ui.downloadImgCheckBox.isChecked():
                 self.downloadImage = True
-                self.configPath.write_text("downloadImg=True")
+                self.settings[0] = True
             else:
                 self.downloadImage = False
-                self.configPath.write_text("downloadImg=False")
+                self.settings[0] = False
         except:
             pass
 

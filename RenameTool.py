@@ -104,7 +104,6 @@ class RenameTool(QThread):
 
                             # Some title may have actors name, remove it
                             for actor in actors:
-                                print(actor in title)
                                 title = title.replace(actor, '')
                             title = title.replace('\n', ' ').strip()
 
@@ -136,6 +135,7 @@ class RenameTool(QThread):
                         pass
                 i = i + 1
             self.countChanged.emit(101)
+            print('Finish')
         except:
             print("Unexpected error:" + str(sys.exc_info()))
             raise
