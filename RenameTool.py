@@ -50,9 +50,9 @@ class RenameTool(QThread):
 
             # Get all files name together and catch number only
 
-            codeSet = []
             i = 0
             while i < len(self.fileList) and not self.stopProc:
+                codeSet = []
                 print("Resolving..." + self.fileList[i])
                 prog = i / len(self.fileList) * 100
                 self.countChanged.emit(prog)
@@ -84,12 +84,12 @@ class RenameTool(QThread):
                             code = ""
                             fillCode = False
                             fillTitle = False
-                            for i in range(len(fullTitle)):
-                                if not fillCode and fullTitle[i] != '':
-                                    code = fullTitle[i]
+                            for j in range(len(fullTitle)):
+                                if not fillCode and fullTitle[j] != '':
+                                    code = fullTitle[j]
                                     fillCode = True
-                                elif not fillTitle and fullTitle[i] != '':
-                                    title = fullTitle[i]
+                                elif not fillTitle and fullTitle[j] != '':
+                                    title = fullTitle[j]
                                     break
 
                             # thumbnail
