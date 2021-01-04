@@ -35,7 +35,7 @@ class RenameTool(QThread):
     def processDownloadImg(self, url, dst):
         suffix = self.getExtension(url)
 
-        r = self.getResponse(url)
+        r = self.getResponse(url, stream=True)
         if r.status_code == 200:
             with open(dst + suffix, 'wb') as f:
                 r.raw.decode_content = True
