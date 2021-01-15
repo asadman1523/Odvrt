@@ -92,14 +92,38 @@ class RenameTool(QThread):
                                     title = fullTitle[j]
                                     break
 
+                            ## Sidebar Start
+                            sidebar = soup.find('div', class_='col-md-4').dl
+                            # release date
+                            sibling = sidebar.find('dt', string='Release Date')
+                            releaseDate = sibling.find_next_sibling('dd').text
+
+                            # Genres
+                            sibling = soup.find('dt', string='Genres')
+                            genresElement = sibling.find_next_sibling('dd')
+                            genres = []
+                            if genresElement is not None:
+                                genresLis = genresElement.findAll('li')
+                                for genre in genresLis:
+                                    genres.append(genre.text.replace('\n', '').strip())
+
+                            # Volume
+                            sibling = soup.find('dt', string='Volume')
+                            volume = sibling.find_next_sibling('dd').text
+
+                            # Rating
+                            sibling = soup.find('dt', string='User Rating')
+                            rating = sibling.find_next_sibling('dd').text
+
                             # thumbnail
                             thumbnail = soup.find('img')
+                            ## Sidebar End
 
                             # actors
                             actorsObj = soup.findAll('h6', class_="card-title")
                             actors = []
                             for actor in actorsObj:
-                                tmpStr = actor.text.strip().replace('\n', '')
+                                tmpStr = actor.text.replace('\n', '').strip()
                                 actors.append(tmpStr)
 
                             # Some title may have actors name, remove it
@@ -118,6 +142,14 @@ class RenameTool(QThread):
                                 fullName = fullName.replace('%title', title)
                             if '%actor' in fullName:
                                 fullName = fullName.replace('%actor', " ".join(actors))
+                            if '%genres' in fullName:
+                                fullName = fullName.replace('%genres', " ".join(genres))
+                            if '%release_date' in fullName:
+                                fullName = fullName.replace('%release_date', releaseDate)
+                            if '%volume' in fullName:
+                                fullName = fullName.replace('%volume', volume)
+                            if '%rating' in fullName:
+                                fullName = fullName.replace('%rating', rating)
 
                             p = pathlib.Path(file)
                             if p.is_file():

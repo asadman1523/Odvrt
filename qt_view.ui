@@ -218,12 +218,12 @@
      <rect>
       <x>310</x>
       <y>60</y>
-      <width>291</width>
+      <width>461</width>
       <height>21</height>
      </rect>
     </property>
     <property name="text">
-     <string>番號=%code 片名=%title 演員=%actor</string>
+     <string>番號 code | 片名 title | 演員 actor | 發售日 release_date | 片長 volume | 評分 rating | 分類 genres</string>
     </property>
    </widget>
    <widget class="QPushButton" name="setDefaultBtn">
