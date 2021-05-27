@@ -189,10 +189,13 @@ class RenameTool(QThread):
 
     def getResponse(self, url, stream=False):
         req = requests.session()
-        req.mount('http://', HTTPAdapter(max_retries=5))
-        req.mount('https://', HTTPAdapter(max_retries=5))
-        ua = UserAgent()
-        headers = {'User-Agent': ua.random}
+        headers = {}
+        try:
+            ua = UserAgent()
+            headers = {'User-Agent': ua.random}
+        except:
+            print('FakeUserAgentError. It often happened...Just ignore it.\n')
+            pass
         response = req.get(url, headers=headers, stream=stream, timeout=5)
         response.encoding = 'utf-8'
         return response
