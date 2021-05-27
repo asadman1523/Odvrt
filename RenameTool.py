@@ -1,8 +1,10 @@
+# -*- coding: utf8 -*-
 import requests
 import sys
 import re
-import pathlib
 import shutil
+import traceback
+import os
 
 from PyQt5.QtCore import QThread, pyqtSignal
 from bs4 import BeautifulSoup
@@ -150,19 +152,32 @@ class RenameTool(QThread):
                                 fullName = fullName.replace('%volume', volume)
                             if '%rating' in fullName:
                                 fullName = fullName.replace('%rating', rating)
-
-                            p = pathlib.Path(file)
-                            if p.is_file():
-                                p.rename(p.with_stem(fullName))
-                                # print(p.with_stem(afterFormat))
+                                          
+                            if os.path.isfile(file):
+                                root, extension = os.path.splitext(file)
+                                import string
+                                print(fullName)
+                                fullName = fullName.translate(str.maketrans({
+                                        #   "]":  r"",
+                                          "\\": r"",
+                                          "^":  r"",
+                                          "$":  r"",
+                                          "*":  r"",
+                                          ":":  r"",
+                                          }))
+                                newName = os.path.join(os.path.abspath(os.path.dirname(file)),fullName + "." + extension)
+                                # print(os.path.abspath(file))
+                                # print(newName)
+                                os.rename(os.path.abspath(file), newName)
                                 if self.downloadThumbnail:
                                     # print(thumbnail['src'])
-                                    self.processDownloadImg(thumbnail['src'], str(p.with_name(fullName)))
+                                    self.processDownloadImg(thumbnail['src'], fullName)
                             break
                         else:
                             raise
                     except:
                         print("Unexpected error:" + str(sys.exc_info()))
+                        print(traceback.print_exc())
                         print(code + " Download failed")
                         pass
                 i = i + 1

@@ -1,6 +1,7 @@
 import pathlib
 import re
 import sys
+import os
 
 from PyQt5 import QtWidgets, QtCore, QtGui
 from PyQt5.QtCore import Qt
@@ -22,6 +23,11 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def __init__(self):
         super(MainWindow, self).__init__()
+        if sys.version_info < (3, 9):
+            print("Python版本錯誤，需要使用3.9以上版本，目前為"+str(sys.version_info[0])+"."+str(sys.version_info[1]))
+            print()
+            os.system("pause")
+            sys.exit(1)
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self.setAcceptDrops(True)
@@ -44,7 +50,6 @@ class MainWindow(QtWidgets.QMainWindow):
                     result = re.findall('=(.+)$', t)
                     self.ui.formatStr.setText(result[0])
         except:
-            # print("Unexpected error:", sys.exc_info()[0])
             raise
         # 讀取設定
         # 開啟
@@ -90,13 +95,12 @@ class MainWindow(QtWidgets.QMainWindow):
             raise
 
     def processDrop(self, obj, filePath):
-        p = pathlib.Path(filePath)
-        if p.is_dir():
-            for child in p.iterdir():
+        if os.path.isdir():
+            for child in os.listdir():
                 self.processDrop(obj, child)
-        elif p.is_file():
-            if not str(p) in obj:
-                return obj.append(str(p))
+        elif os.path.isfile(filePath):
+            if not filePath in obj:
+                return obj.append(filePath)
 
     def openBtnClicked(self):
         dialog = QFileDialog()
