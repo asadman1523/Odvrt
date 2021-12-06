@@ -96,7 +96,7 @@ class MainWindow(QtWidgets.QMainWindow):
             raise
 
     def processDrop(self, obj, filePath):
-        if os.path.isdir():
+        if os.path.isdir(filePath):
             for child in os.listdir():
                 self.processDrop(obj, child)
         elif os.path.isfile(filePath):
