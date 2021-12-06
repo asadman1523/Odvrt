@@ -1,0 +1,1 @@
+tar -c -f odver-version.zip UI windows_run.cmd requirements.txt RenameTool.py README.md qt_view.py qt_view.ui odvrt.py mac_run.sh how_to_use.gif
