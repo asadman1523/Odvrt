@@ -1,4 +1,4 @@
-PyQt5~=5.15.2
+PyQt6~=6.5.2
 requests~=2.25.1
 beautifulsoup4~=4.9.3
 fake_useragent~=0.1.11

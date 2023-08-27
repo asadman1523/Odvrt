@@ -6,7 +6,7 @@ import shutil
 import traceback
 import os
 
-from PyQt5.QtCore import QThread, pyqtSignal
+from PyQt6.QtCore import QThread, pyqtSignal
 from bs4 import BeautifulSoup
 from fake_useragent import UserAgent
 from requests.adapters import HTTPAdapter
@@ -69,12 +69,13 @@ class RenameTool(QThread):
                         if len(result) > 1:
                             codeSet = codeSet + [result[0] + "-" + result[1]]
                 else:
-                    codeSet.append(reResult[0])
+                    codeSet.append(reResult[len(reResult)-1])
                 for code in codeSet:
                     try:
                         print("Downloading..." + code)
                         # Get data
                         resp = self.getResponse('https://www.libredmm.com/movies/' + code)
+                        print(resp)
                         if resp.status_code == 200:
                             soup = BeautifulSoup(resp.text, 'html.parser')
 
@@ -179,7 +180,6 @@ class RenameTool(QThread):
                         print("Unexpected error:" + str(sys.exc_info()))
                         print(traceback.print_exc())
                         print(code + " Download failed")
-                        pass
                 i = i + 1
             self.countChanged.emit(101)
             print('Finish')

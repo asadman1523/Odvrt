@@ -4,9 +4,9 @@ import re
 import sys
 import os
 
-from PyQt5 import QtWidgets, QtCore, QtGui
-from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QTableWidgetItem, QFileDialog, QDialog, QPushButton, QLabel, QProgressBar
+from PyQt6 import QtWidgets, QtCore, QtGui
+from PyQt6.QtCore import Qt
+from PyQt6.QtWidgets import QTableWidgetItem, QFileDialog, QDialog, QPushButton, QLabel, QProgressBar
 
 from RenameTool import RenameTool
 from qt_view import Ui_MainWindow
@@ -105,8 +105,8 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def openBtnClicked(self):
         dialog = QFileDialog()
-        dialog.setFileMode(QFileDialog.ExistingFiles)
-        dialog.setOption(QFileDialog.ShowDirsOnly, False)
+        dialog.setFileMode(QFileDialog.FileMode.ExistingFile)
+        dialog.setOption(QFileDialog.Option.ReadOnly)
         if dialog.exec():
             self.fileNames = dialog.selectedFiles() + self.fileNames
             self.fileNames = list(dict.fromkeys(self.fileNames))
@@ -130,8 +130,8 @@ class MainWindow(QtWidgets.QMainWindow):
         btn.setText("取消")
         btn.move(300, 70)
         btn.clicked.connect(lambda: self.confirmDialog.close())
-        self.confirmDialog.setWindowModality(Qt.ApplicationModal)
-        self.confirmDialog.exec_()
+        self.confirmDialog.setWindowModality(QtCore.Qt.WindowModality.ApplicationModal)
+        self.confirmDialog.exec()
 
     def showProgressAndRun(self):
         try:
@@ -203,7 +203,7 @@ class MainWindow(QtWidgets.QMainWindow):
         i = 0
         while i < len(self.fileNames):
             item = QTableWidgetItem()
-            item.setFlags(item.flags() ^ 2)
+            # item.setFlags(item.flags() ^ 2)
             item.setText(self.fileNames[i])
             self.ui.tableWidget.setItem(i, 0, item)
             i = i + 1
@@ -224,4 +224,4 @@ if __name__ == '__main__':
     app = QtWidgets.QApplication([])
     window = MainWindow()
     window.show()
-    sys.exit(app.exec_())
+    sys.exit(app.exec())
